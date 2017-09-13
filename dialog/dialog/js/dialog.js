@@ -318,7 +318,7 @@
 			}else if(content.indexOf('id:') == 0){//内容为id时
 				return $(content.substring(3)).clone().wrap('<div></div>').parent().html();
 			}else if(content.indexOf('iframe:') == 0){//内容为iframe时
-				return 	'<iframe width="100%" height="100%" src="+ content.substring(7) +"></iframe>';
+				return 	'<iframe width="100%" height="100%" src='+ content.substring(7) +'></iframe>';
 			}else{
 				return content;	
 			}
@@ -680,7 +680,30 @@
 			}
 			
 			$elem = $(elem);
-			if($elem.size() <= 2="" 0){return="" ;}="" if($elem.is(':hidden')){="" this.position();="" return="" ;="" }="" var="" that="this," dialog="that.dialog," setting="that.setting," etop="$elem.offset().top," eleft="$elem.offset().left," ewidth="$elem.width()," eheight="$elem.height()," dwidth="dialog.width()," dheight="dialog.height()," clientwidth="$(G.win).width()," clientheight="$(G.win).height()," docleft="$(G.doc).scrollLeft()," doctop="$(G.doc).scrollTop()," top="eTop" +="" 10,="" left="(eLeft" 2)="" -="" 10;="" 当在指定元素下时超出视口移到元素上面="" if(top=""> clientHeight){
+			if($elem.size() <= 0){return ;}
+			if($elem.is(':hidden')){
+				this.position();	
+				return ;
+			}
+			
+			var that = this,
+				dialog = that.dialog,
+				setting = that.setting,
+				eTop = $elem.offset().top,
+				eLeft = $elem.offset().left,
+				eWidth = $elem.width(),
+				eHeight = $elem.height(),
+				dWidth = dialog.width(),
+				dHeight = dialog.height(),
+				clientWidth = $(G.win).width(),
+				clientHeight = $(G.win).height(),
+				docLeft = $(G.doc).scrollLeft(),
+				docTop = $(G.doc).scrollTop(),
+				top = eTop + eHeight + 10,
+				left = (eLeft + eWidth / 2) - dWidth/2 + 10;
+			
+			//当在指定元素下时超出视口移到元素上面
+			if(top + dHeight - docTop  > clientHeight){
 				top = eTop - dHeight - 10;	
 			}
 			//当窗口超出浏览器边界时移动
@@ -985,4 +1008,3 @@
 	}
 	
 })(jQuery);
-</=></button>

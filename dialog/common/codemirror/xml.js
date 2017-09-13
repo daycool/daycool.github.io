@@ -51,7 +51,10 @@ CodeMirror.defineMode("xml", function(config, parserConfig) {
     }
 
     var ch = stream.next();
-    if (ch == "<") {="" if="" (stream.eat("!"))="" (stream.eat("["))="" (stream.match("cdata["))="" return="" chain(inblock("atom",="" "]]="">"));
+    if (ch == "<") {
+      if (stream.eat("!")) {
+        if (stream.eat("[")) {
+          if (stream.match("CDATA[")) return chain(inBlock("atom", "]]>"));
           else return null;
         }
         else if (stream.match("--")) return chain(inBlock("comment", "-->"));
@@ -91,7 +94,14 @@ CodeMirror.defineMode("xml", function(config, parserConfig) {
       return ok ? "atom" : "error";
     }
     else {
-      stream.eatWhile(/[^&<] );="" return="" null;="" }="" function="" intag(stream,="" state)="" {="" var="" ch="stream.next();" if="" (ch="=" "="">" || (ch == "/" && stream.eat(">"))) {
+      stream.eatWhile(/[^&<]/);
+      return null;
+    }
+  }
+
+  function inTag(stream, state) {
+    var ch = stream.next();
+    if (ch == ">" || (ch == "/" && stream.eat(">"))) {
       state.tokenize = inText;
       type = ch == ">" ? "endTag" : "selfcloseTag";
       return "tag";
@@ -138,7 +148,10 @@ CodeMirror.defineMode("xml", function(config, parserConfig) {
     return function(stream, state) {
       var ch;
       while ((ch = stream.next()) != null) {
-        if (ch == "<") {="" state.tokenize="doctype(depth" +="" 1);="" return="" state.tokenize(stream,="" state);="" }="" else="" if="" (ch="=" "="">") {
+        if (ch == "<") {
+          state.tokenize = doctype(depth + 1);
+          return state.tokenize(stream, state);
+        } else if (ch == ">") {
           if (depth == 1) {
             state.tokenize = inText;
             break;
@@ -290,7 +303,7 @@ CodeMirror.defineMode("xml", function(config, parserConfig) {
       if ((state.tokenize != inTag && state.tokenize != inText) ||
           context && context.noIndent)
         return fullLine ? fullLine.match(/^(\s*)/)[0].length : 0;
-      if (alignCDATA && /\[CDATA\[/.test(textAfter)) return 0;
+      if (alignCDATA && /<!\[CDATA\[/.test(textAfter)) return 0;
       if (context && /^<\//.test(textAfter))
         context = context.prev;
       while (context && !context.startOfLine)
@@ -309,4 +322,3 @@ CodeMirror.defineMIME("text/xml", "xml");
 CodeMirror.defineMIME("application/xml", "xml");
 if (!CodeMirror.mimeModes.hasOwnProperty("text/html"))
   CodeMirror.defineMIME("text/html", {name: "xml", htmlMode: true});
-</")></]></")>

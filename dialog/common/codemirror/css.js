@@ -195,7 +195,37 @@ CodeMirror.defineMode("css", function(config) {
       state.tokenize = tokenCComment;
       return tokenCComment(stream, state);
     }
-    else if (ch == "<" &&="" stream.eat("!"))="" {="" state.tokenize="tokenSGMLComment;" return="" tokensgmlcomment(stream,="" state);="" }="" else="" if="" (ch="=" "=") ret(null, " compare");="" ((ch="=" "~"="" ||="" ch="=" "|")="" stream.eat("=")) return ret(null, " "\""="" "'")="" state.tokenize(stream,="" "#")="" stream.eatwhile(="" [\w\\\-]="" );="" ret("atom",="" "hash");="" "!")="" stream.match(="" ^\s*\w*="" ret("keyword",="" "important");="" (="" \d="" .test(ch))="" [\w.%]="" ret("number",="" "unit");="" "-")="" .test(stream.peek()))="" (stream.match(="" ^[^-]+-="" ))="" ret("meta",="" type);="" [,+="">*\/]/.test(ch)) {
+    else if (ch == "<" && stream.eat("!")) {
+      state.tokenize = tokenSGMLComment;
+      return tokenSGMLComment(stream, state);
+    }
+    else if (ch == "=") ret(null, "compare");
+    else if ((ch == "~" || ch == "|") && stream.eat("=")) return ret(null, "compare");
+    else if (ch == "\"" || ch == "'") {
+      state.tokenize = tokenString(ch);
+      return state.tokenize(stream, state);
+    }
+    else if (ch == "#") {
+      stream.eatWhile(/[\w\\\-]/);
+      return ret("atom", "hash");
+    }
+    else if (ch == "!") {
+      stream.match(/^\s*\w*/);
+      return ret("keyword", "important");
+    }
+    else if (/\d/.test(ch)) {
+      stream.eatWhile(/[\w.%]/);
+      return ret("number", "unit");
+    }
+    else if (ch === "-") {
+      if (/\d/.test(stream.peek())) {
+        stream.eatWhile(/[\w.%]/);
+        return ret("number", "unit");
+      } else if (stream.match(/^[^-]+-/)) {
+        return ret("meta", type);
+      }
+    }
+    else if (/[,+>*\/]/.test(ch)) {
       return ret(null, "select-op");
     }
     else if (ch == "." && stream.match(/^-?[_a-z][_a-z0-9-]*/i)) {
@@ -433,4 +463,3 @@ CodeMirror.defineMode("css", function(config) {
 });
 
 CodeMirror.defineMIME("text/css", "css");
-</">

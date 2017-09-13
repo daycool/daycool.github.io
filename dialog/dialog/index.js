@@ -154,4 +154,4 @@ $(function(){
 			$a.hide();	
 		}
 	});
-});</script></textarea>
+});

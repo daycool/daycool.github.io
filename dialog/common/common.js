@@ -244,4 +244,4 @@ $(function(){
 		$demoArea2.find('input.testDemo').click();
 	}
 
-});</script></textarea>
+});
