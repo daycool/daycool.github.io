@@ -250,7 +250,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
-            作品
+            menu.product
           </a>
         </li>
       
@@ -273,6 +273,137 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/17/cors跨域/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="daycool">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天凉了">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/17/cors跨域/" itemprop="url">cors跨域</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-17T15:17:43+08:00">
+                2017-09-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>  出于安全的考虑，浏览器会限制跨域的ajax请求。但是实际场景确实需要跨域请求，所以w3c定制了cors跨域方案。</p>
+<p>其实跨域ajax请求请求并返回了，只不过浏览器在返回时做判断服务器向响应是否可以跨域。有一个chrome的cors插件配置跨域其实就时告诉浏览器别做这个判断，还有在chrome启动的时候传参数 允许跨域访问</p>
+<h2 id="cors分为简单跨域请求和复杂跨域请求"><a href="#cors分为简单跨域请求和复杂跨域请求" class="headerlink" title="cors分为简单跨域请求和复杂跨域请求"></a>cors分为简单跨域请求和复杂跨域请求</h2><h3 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h3><ol>
+<li>GET和HEAD请求</li>
+<li>POST请求且Content-Type为text/plain、multipart/form-data、application/x-www-form-urlencoded其中一个<br>满足上面条件就是简单请求，否则时复杂请求</li>
+</ol>
+<p>发起简单请求时浏览器会在这个请求header中自动加一个origin字段，值是当前请求源（协议+域名+端口），服务器在响应请求header中指定了Access-Control-Allow-Origin: * | 请求Origin值，则简单跨域请求完成。</p>
+<h3 id="复杂请求"><a href="#复杂请求" class="headerlink" title="复杂请求"></a>复杂请求</h3><p>复杂请求比简单请求多了个预检查请求。预检查请求会会向服务器发送一个OPTIONS请求，用来检查服务器是否允许当前实际请求。主要是为了避免跨域请求非法请求对服务器数据带来影响。</p>
+<p>预检查请求除了添加了origin字段还有加了Access-Control-Request-Method用来告诉服务器实际请求方式，Access-Control-Request-Heaers用来告诉服务器额外的header信息。<br>服务器收到预检查后，检查这三个字段确认是否允许跨域请求。如果允许响应header包括Access-Control-Allow-Orign: * | 请求Origin值,<br>Access-Control-Allow-Methods: GET, POST, PUT(其中有实际请求方,Access-COntrol-Allow-Headers: 包含浏览器传来的header信息<br>预检查请求通过后发出实际请求。</p>
+<p>如果请求带cookie ajax请求必须把withCredentials设为true, 服务器必须响应Access-Control-Allow-Credentials: true, 且Access-Control-Allow-Origin值不能为*|多个域名</p>
+<p>复杂请求发出两次请求，但通常我们只看到了一次请求，那是因为为避免过多无用请求通过Access-Control-Max-Age设置了预检查请求缓存，</p>
+<h2 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h2><p>服务器端跨域</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -603,7 +734,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -616,7 +747,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">1</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
